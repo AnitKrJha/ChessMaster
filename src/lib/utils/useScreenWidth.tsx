@@ -1,19 +1,26 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 const useScreenWidth = (): number => {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
 
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
+    // Check if running on the client-side before adding the event listener
+    if (typeof window !== "undefined") {
+      setScreenWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+    }
 
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener("resize", handleResize);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
     };
   }, []);
 
