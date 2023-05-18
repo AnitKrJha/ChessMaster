@@ -4,7 +4,7 @@ import React, { Ref, Suspense, createRef } from "react";
 import { ChessboardProps } from "react-chessboard/dist/chessboard/types";
 import { Chessboard } from "react-chessboard";
 import { ClearPremoves } from "react-chessboard/dist/index";
-import useScreenWidth from "./utils/useScreenWidth";
+import useScreenWidth from "../utils/useScreenWidth";
 
 interface ChessboardWrapperProps extends ChessboardProps {
   additionalProp?: string;

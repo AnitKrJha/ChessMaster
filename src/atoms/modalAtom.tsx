@@ -1,16 +1,16 @@
 import { atom } from "recoil";
 
-interface ModalState {
+export interface ModalStateType {
   open: boolean;
   type: "Gameover";
 }
 
-const defaultModalState: ModalState = {
+const defaultModalState: ModalStateType = {
   open: false,
   type: "Gameover",
 };
 
-export const ModalState = atom<ModalState>({
+export const ModalState = atom<ModalStateType>({
   key: "ModalStateAtom",
   default: defaultModalState,
 });
