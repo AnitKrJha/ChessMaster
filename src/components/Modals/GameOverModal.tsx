@@ -60,6 +60,8 @@ const GameOverModal = (props: Props) => {
                   className="m-auto mb-4"
                   width={100}
                   height={100}
+                  priority
+                  quality={10}
                 />
               </div>
               Congratulations, Chessmaster! You have emerged victorious. Well

@@ -1,22 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { Square } from "chess.js/dist/chess";
 import Chessboard from "@/lib/ChessBoard/Chessboard";
-import { getKingPositions } from "@/lib/GetKingSquare";
 import { Chess } from "chess.js";
-import {
-  MoveSound,
-  CaptureSound,
-  IllegalSound,
-} from "@/lib/Sounds/ChessBoardSound";
-
-import GameOverModal from "@/components/Modals/GameOverModal";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRef, useState } from "react";
 import { ModalState } from "@/atoms/modalAtom";
+import GameOverModal from "@/components/Modals/GameOverModal";
 import onPieceDrop from "@/lib/ChessBoard/onPieceDrop";
-
-//Game Logic -> check isGameOver
+import { useSetRecoilState } from "recoil";
 
 export default function Home() {
   const setModalState = useSetRecoilState(ModalState);
