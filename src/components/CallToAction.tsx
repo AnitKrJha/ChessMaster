@@ -6,9 +6,9 @@ import { Bebas_Neue } from "next/font/google";
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 export function CallToAction({}) {
   return (
-    <div className="call-to-action">
+    <div className="call-to-action z-10">
       <div
-        className={` text-white subheading  max-w-lg my-8  m-auto px-4  text-center text-2xl ${bebas.className}`}
+        className={` text-white subheading  max-w-lg my-8  m-auto px-4  text-center text-2xl ${bebas.className} z-10`}
       >
         Are You ready to seize the challenge?
       </div>
@@ -16,7 +16,7 @@ export function CallToAction({}) {
       <div className="btn-group flex gap-4 m-auto justify-center">
         <Link href={"/play"} className={` text-white ${bebas.className}`}>
           <ChakraButton
-            className="font-normal"
+            className="font-normal z-10"
             variant={"outline"}
             _hover={{
               bg: "rgba(255,255,255,0.13)",
@@ -28,7 +28,7 @@ export function CallToAction({}) {
         <Link href={"/play"} className={`${bebas.className}`}>
           <ChakraButton
             variant={"solid"}
-            className=" font-normal bg-white text-black"
+            className=" font-normal z-10 bg-white text-black"
           >
             Play Offline
           </ChakraButton>
