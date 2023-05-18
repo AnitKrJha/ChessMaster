@@ -24,30 +24,28 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
 
   return (
     <>
-      <Suspense fallback={<p className="bg-white">Loading</p>}>
-        <Chessboard
-          // areArrowsAllowed={false}
-          customDropSquareStyle={{
-            background:
-              "linear-gradient(to left,rgba(70, 141, 139,0.8), rgba(15, 85, 99,0.5))",
-          }}
-          boardWidth={Math.min(screenWidth - 40, 600)}
-          customBoardStyle={{
-            margin: "auto",
+      <Chessboard
+        // areArrowsAllowed={false}
+        customDropSquareStyle={{
+          background:
+            "linear-gradient(to left,rgba(70, 141, 139,0.8), rgba(15, 85, 99,0.5))",
+        }}
+        boardWidth={Math.min(screenWidth - 40, 600)}
+        customBoardStyle={{
+          margin: "auto",
 
-            overflow: "hidden",
-          }}
-          customDarkSquareStyle={{
-            background: "linear-gradient(rgb(27, 69, 89), rgb(65, 85, 99))",
-          }}
-          customLightSquareStyle={{
-            background:
-              "linear-gradient(to right, rgb(243, 244, 246), rgb(209, 213, 219))",
-          }}
-          {...otherProps}
-          ref={ref}
-        />
-      </Suspense>
+          overflow: "hidden",
+        }}
+        customDarkSquareStyle={{
+          background: "linear-gradient(rgb(27, 69, 89), rgb(65, 85, 99))",
+        }}
+        customLightSquareStyle={{
+          background:
+            "linear-gradient(to right, rgb(243, 244, 246), rgb(209, 213, 219))",
+        }}
+        {...otherProps}
+        ref={ref}
+      />
     </>
   );
 };

@@ -9,7 +9,6 @@ import Lottie from "@/lib/ClientLottie";
 export default function Home() {
   return (
     <>
-      <Header />
       <main
         className={`w-full px-4 pt-4 pb-8 sm:pt-16 min-h-[calc(100dvh_-_64px)] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black`}
       >
