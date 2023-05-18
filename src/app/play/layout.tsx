@@ -5,10 +5,5 @@ export default function PlayLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Header />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
