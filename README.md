@@ -39,7 +39,7 @@ To set up the ChessMaster project locally, please follow these steps:
 2. Clone the repository using the following command:
 
    ```
-   git clone https://github.com/your-username/chessmaster.git
+   git clone https://github.com/anitkrjha/chessmaster.git
    ```
 
 3. Navigate to the project directory:
