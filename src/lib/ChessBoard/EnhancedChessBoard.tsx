@@ -1,30 +1,53 @@
 "use client";
 
-import React, { Ref, Suspense, createRef } from "react";
-import { ChessboardProps } from "react-chessboard/dist/chessboard/types";
+import { ModalState } from "@/atoms/modalAtom";
+import GameOverModal from "@/components/Modals/GameOverModal";
+import { Chess } from "chess.js";
+import React, { Ref, createRef, useRef, useState } from "react";
 import { Chessboard } from "react-chessboard";
+import { ChessboardProps } from "react-chessboard/dist/chessboard/types";
 import { ClearPremoves } from "react-chessboard/dist/index";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import useScreenWidth from "../utils/useScreenWidth";
+import onPieceDrop from "./onPieceDrop";
+import { game } from "../ChessLogic/Game";
+import { GameState } from "@/atoms/gameAtom";
 
 interface ChessboardWrapperProps extends ChessboardProps {
   additionalProp?: string;
-  // Add other additional props as needed
 }
 
 const ChessBoard: React.FC<ChessboardWrapperProps> = ({
   additionalProp,
   ...otherProps
 }) => {
-  // Create a ref of type Ref<ClearPremoves>
   const ref: Ref<ClearPremoves> = createRef<ClearPremoves>();
 
-  // Additional logic and rendering for your wrapper component
-
   const screenWidth = useScreenWidth();
+
+  const setModalState = useSetRecoilState(ModalState);
+  const [gameState, setGameState] = useRecoilState(GameState);
+  const resetGame = () => {
+    setGameState((prev) => ({ ...prev, fen: null }));
+    game.reset();
+  };
+
+  const onDrop = (sourceSquare: any, targetSquare: any, piece: any) => {
+    return onPieceDrop(
+      sourceSquare,
+      targetSquare,
+      piece,
+      game,
+      setGameState,
+      setModalState
+    );
+  };
 
   return (
     <>
       <Chessboard
+        onPieceDrop={onDrop}
+        position={gameState.fen ?? "start"}
         // areArrowsAllowed={false}
         customDropSquareStyle={{
           background:
@@ -46,6 +69,9 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
         {...otherProps}
         ref={ref}
       />
+      {game.isGameOver() && (
+        <GameOverModal resetBoard={resetGame} loser={game.turn()} />
+      )}
     </>
   );
 };

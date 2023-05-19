@@ -1,22 +1,17 @@
-import { Piece, Square } from "react-chessboard/dist/chessboard/types";
-import React, { Dispatch, SetStateAction } from "react";
-import { Chess } from "chess.js";
-import {
-  CaptureSound,
-  MoveSound,
-  IllegalSound,
-  PlayChessBoardSound,
-} from "../Sounds/ChessBoardSound";
-import { whichMove } from "./whichMove";
-import { SetterOrUpdater, useSetRecoilState } from "recoil";
+import { GameStateType } from "@/atoms/gameAtom";
 import { ModalStateType } from "@/atoms/modalAtom";
+import { Chess } from "chess.js";
+import { Piece, Square } from "react-chessboard/dist/chessboard/types";
+import { SetterOrUpdater } from "recoil";
+import { IllegalSound, PlayChessBoardSound } from "../Sounds/ChessBoardSound";
+import { whichMove } from "./whichMove";
 
 const onPieceDrop = (
   source: Square,
   target: Square,
   piece: Piece,
   game: Chess,
-  setPosition: Dispatch<SetStateAction<string | null>>,
+  setGame: SetterOrUpdater<GameStateType>,
   setModalState: SetterOrUpdater<ModalStateType>
 ): boolean => {
   try {
@@ -48,10 +43,10 @@ const onPieceDrop = (
       typeOfMove,
     });
 
-    console.log("hello", { MOVE });
+    console.table({ ...MOVE });
     PlayChessBoardSound(typeOfMove);
 
-    setPosition(game.fen());
+    setGame((prev) => ({ ...prev, fen: game.fen() }));
   } catch (e: any) {
     IllegalSound.play();
     console.log(e.message);

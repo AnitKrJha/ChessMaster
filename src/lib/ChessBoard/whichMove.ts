@@ -1,5 +1,4 @@
-import { Chess, Move } from "chess.js";
-import { Square } from "react-chessboard/dist/chessboard/types";
+import { Move } from "chess.js";
 
 export type MoveTypes =
   | "capture"
@@ -12,10 +11,8 @@ export type MoveTypes =
 
 export const whichMove = (move: Move, inCheck: boolean): MoveTypes => {
   if (inCheck) return "check";
-  if (move.flags === "n" || move.flags === "b") return "normal";
-  if (move.flags === "c" || move.flags === "e") return "capture";
-  if (move.flags === "p") return "promotion";
-  if (move.flags === "pc") return "promotion";
+  if (move.promotion) return "promotion";
+  if (move.captured) return "capture";
   if (move.flags === "q" || move.flags === "k") return "castle";
   return "normal";
 };
