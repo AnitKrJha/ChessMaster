@@ -2,6 +2,7 @@ import ChakraButton from "@/lib/Chakra/button";
 import { AccordionButton, AccordionPanel, Icon } from "@chakra-ui/react";
 import { Crown, ChevronDown } from "lucide-react";
 import { Bebas_Neue, Montserrat } from "next/font/google";
+import Link from "next/link";
 
 const monst = Montserrat({ subsets: ["latin"], weight: ["300", "400"] });
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
@@ -34,26 +35,33 @@ const PassNPlay = (props: Props) => {
         </div>
         {/* //------------------------------Logic==========-? */}
         <div className=" button-group my-4 flex gap-4 justify-around">
-          <ChakraButton
-            aspectRatio={1}
-            variant={"outline"}
-            _hover={{ bg: "rgba(255,255,255,0.13)" }}
-            height={"100px"}
-            className="flex flex-col "
-          >
-            <Crown stroke="white" fill="white" size={60} />
-            <p className={`${bebas.className} text-xl tracking-wider`}>White</p>
-          </ChakraButton>
-
-          <ChakraButton
-            aspectRatio={1}
-            variant={"solid"}
-            height={"100px"}
-            className="flex flex-col text-black"
-          >
-            <Crown stroke="black" fill="black" size={60} />
-            <p className={`${bebas.className} text-xl tracking-wider`}>Black</p>
-          </ChakraButton>
+          <Link href={"/play"}>
+            <ChakraButton
+              aspectRatio={1}
+              variant={"outline"}
+              _hover={{ bg: "rgba(255,255,255,0.13)" }}
+              height={"100px"}
+              className="flex flex-col "
+            >
+              <Crown stroke="white" fill="white" size={60} />
+              <p className={`${bebas.className} text-xl tracking-wider`}>
+                White
+              </p>
+            </ChakraButton>
+          </Link>
+          <Link href={"/play"}>
+            <ChakraButton
+              aspectRatio={1}
+              variant={"solid"}
+              height={"100px"}
+              className="flex flex-col text-black"
+            >
+              <Crown stroke="black" fill="black" size={60} />
+              <p className={`${bebas.className} text-xl tracking-wider`}>
+                Black
+              </p>
+            </ChakraButton>
+          </Link>
         </div>
       </AccordionPanel>
     </>

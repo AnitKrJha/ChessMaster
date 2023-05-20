@@ -14,7 +14,7 @@ export function CallToAction({}) {
       </div>
 
       <div className="btn-group flex gap-4 m-auto justify-center">
-        <Link href={"/play"} className={` text-white ${bebas.className}`}>
+        <Link href={"/choose"} className={` text-white ${bebas.className}`}>
           <ChakraButton
             className="font-normal z-10"
             variant={"outline"}
@@ -25,7 +25,7 @@ export function CallToAction({}) {
             Play Chess
           </ChakraButton>
         </Link>
-        <Link href={"/play"} className={`${bebas.className}`}>
+        <Link href={"/choose"} className={`${bebas.className}`}>
           <ChakraButton
             variant={"solid"}
             className=" font-normal z-10 bg-white text-black"

@@ -29,7 +29,7 @@ export function Header() {
         </div>
 
         <Link
-          href={"/play"}
+          href={"/choose"}
           className={`tracking-wider text-white ${bebas.className}`}
         >
           <ChakraButton
