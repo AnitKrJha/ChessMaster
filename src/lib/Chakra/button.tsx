@@ -8,7 +8,7 @@ interface Props extends ButtonProps {}
 const ChakraButton = (props: Props) => {
   return (
     <Providers>
-      <Button {...props} />
+      <Button fontWeight={"normal"} {...props} />
     </Providers>
   );
 };

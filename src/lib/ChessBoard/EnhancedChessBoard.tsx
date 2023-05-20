@@ -1,17 +1,17 @@
 "use client";
 
+import { GameState, defaultGameState } from "@/atoms/gameAtom";
 import { ModalState } from "@/atoms/modalAtom";
+import BoardNavButtons from "@/components/BoardControls/navbuttons";
 import GameOverModal from "@/components/Modals/GameOverModal";
-import { Chess } from "chess.js";
-import React, { Ref, createRef, useRef, useState } from "react";
+import React, { Ref, createRef } from "react";
 import { Chessboard } from "react-chessboard";
 import { ChessboardProps } from "react-chessboard/dist/chessboard/types";
 import { ClearPremoves } from "react-chessboard/dist/index";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { game } from "../ChessLogic/Game";
 import useScreenWidth from "../utils/useScreenWidth";
 import onPieceDrop from "./onPieceDrop";
-import { game } from "../ChessLogic/Game";
-import { GameState } from "@/atoms/gameAtom";
 
 interface ChessboardWrapperProps extends ChessboardProps {
   additionalProp?: string;
@@ -28,7 +28,7 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
   const setModalState = useSetRecoilState(ModalState);
   const [gameState, setGameState] = useRecoilState(GameState);
   const resetGame = () => {
-    setGameState((prev) => ({ ...prev, fen: null }));
+    setGameState(defaultGameState);
     game.reset();
   };
 
@@ -44,7 +44,7 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
   };
 
   return (
-    <>
+    <div className="max-w-2xl m-auto">
       <Chessboard
         onPieceDrop={onDrop}
         position={gameState.fen ?? "start"}
@@ -69,10 +69,11 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
         {...otherProps}
         ref={ref}
       />
+      <BoardNavButtons />
       {game.isGameOver() && (
         <GameOverModal resetBoard={resetGame} loser={game.turn()} />
       )}
-    </>
+    </div>
   );
 };
 

@@ -12,3 +12,24 @@ html {
 body {
   background: black;
 }
+/* Define the scrollbar style */
+::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+  height: 5px;
+}
+
+/* Define the track style */
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Dark-colored track */
+}
+
+/* Define the thumb style */
+::-webkit-scrollbar-thumb {
+  background: "gray"; /* Color of the thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+/* Define the hover style for the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the thumb on hover */
+}

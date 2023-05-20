@@ -1,10 +1,8 @@
 import { CallToAction } from "@/components/CallToAction";
 import AnimatedSpan from "@/components/animatedspan";
 import { Bebas_Neue, Montserrat } from "next/font/google";
-import { Header } from "../components/Header";
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 const monst = Montserrat({ subsets: ["latin"], weight: ["300", "400"] });
-import Lottie from "@/lib/ClientLottie";
 
 export default function Home() {
   return (

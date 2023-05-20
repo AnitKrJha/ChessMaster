@@ -46,7 +46,10 @@ const GameOverModal = (props: Props) => {
         >
           <ModalOverlay backdropFilter={"blur(10px) hue-rotate(46deg)"} />
           <ModalContent
-            className={`${bebas.className} bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-gray-700 via-slate-900 to-gray-700 `}
+            background={
+              "radial-gradient(at center top, rgb(55, 65, 81), rgb(17, 24, 39), rgb(0, 0, 0))"
+            }
+            className={`${bebas.className} `}
           >
             <ModalHeader className="text-white text-4xl font-normal">
               🎉 Victory!

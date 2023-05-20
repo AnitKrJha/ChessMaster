@@ -46,7 +46,12 @@ const onPieceDrop = (
     console.table({ ...MOVE });
     PlayChessBoardSound(typeOfMove);
 
-    setGame((prev) => ({ ...prev, fen: game.fen() }));
+    setGame((prev) => ({
+      ...prev,
+      fen: game.fen(),
+      movesPlayed: prev.movesPlayed + 1,
+      moveNumberView: prev.movesPlayed + 1,
+    }));
   } catch (e: any) {
     IllegalSound.play();
     console.log(e.message);
