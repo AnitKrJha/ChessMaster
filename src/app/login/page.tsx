@@ -36,6 +36,7 @@ const LoginPage = (props: Props) => {
         // view={}
         socialLayout="horizontal"
         providers={["google"]}
+        redirectTo="/dashboard"
       />
     </div>
   );

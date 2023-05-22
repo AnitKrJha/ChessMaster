@@ -1,5 +1,6 @@
 import { GameState } from "@/atoms/gameAtom";
 import EnhancedChessboard from "@/lib/ChessBoard/EnhancedChessBoard";
+import { Suspense } from "react";
 import { useRecoilState } from "recoil";
 
 export default function Home() {

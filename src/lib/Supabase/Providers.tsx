@@ -51,6 +51,10 @@ export default function SupabaseProvider({
     };
   }, [router, supabase]);
 
+  useEffect(() => {
+    console.log("router is changing", [router]);
+  });
+
   return (
     <Context.Provider value={{ supabase, session, user }}>
       <>{children}</>
