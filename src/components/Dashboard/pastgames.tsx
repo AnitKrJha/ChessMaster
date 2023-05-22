@@ -10,6 +10,8 @@ import {
   Tfoot,
   Table,
   Divider,
+  Skeleton,
+  SkeletonCircle,
 } from "@chakra-ui/react";
 import { Shield } from "lucide-react";
 import { Bebas_Neue, Montserrat } from "next/font/google";
@@ -22,53 +24,26 @@ const monst = Montserrat({
   weight: ["400", "500", "600"],
 });
 
-type Props = {};
+type Props = {
+  pastGames: PastGameType[];
+  loading: boolean;
+};
 
 const PastGames = (props: Props) => {
-  const [pastGames, setPastGames] = useState<PastGameType[]>([
-    {
-      opponentName: "John Doe",
-      opponentPic: "https://example.com/johndoe.jpg",
-      date: new Date(),
-      result: "Win",
-      index: 1,
-    },
-    {
-      opponentName: "Jane Smith",
-      opponentPic: "https://example.com/janesmith.jpg",
-      date: new Date(),
-      result: "Loss",
-      index: 2,
-    },
-    {
-      opponentName: "John Doe",
-      opponentPic: "https://example.com/johndoe.jpg",
-      date: new Date(),
-      result: "Win",
-      index: 1,
-    },
-    {
-      opponentName: "Jane Smith",
-      opponentPic: "https://example.com/janesmith.jpg",
-      date: new Date(),
-      result: "Loss",
-      index: 2,
-    },
-    {
-      opponentName: "John Doe",
-      opponentPic: "https://example.com/johndoe.jpg",
-      date: new Date(),
-      result: "Win",
-      index: 1,
-    },
-    {
-      opponentName: "Jane Smith",
-      opponentPic: "https://example.com/janesmith.jpg",
-      date: new Date(),
-      result: "Loss",
-      index: 2,
-    },
-  ]);
+  if (props.loading) {
+    return (
+      <div className="w-full m-auto shadow-sm shadow-gray-500 px-4 ">
+        <Providers>
+          <Skeleton height={"30px"} my="2" />
+          <SkeletonCircle size="10" />
+          <Skeleton height={"25px"} my="2" />
+          <Skeleton height={"25px"} my="2" />
+          <Skeleton height={"25px"} my="2" />
+          <Skeleton height={"25px"} my="2" />
+        </Providers>
+      </div>
+    );
+  }
 
   return (
     <Providers>
@@ -95,7 +70,7 @@ const PastGames = (props: Props) => {
               </Tr>
             </Thead>
             <Tbody>
-              {pastGames.map((item, index) => {
+              {props.pastGames.map((item, index) => {
                 return (
                   <PastGameItem
                     date={item.date}

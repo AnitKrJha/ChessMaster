@@ -3,8 +3,8 @@ import { Montserrat } from "next/font/google";
 import React from "react";
 
 export interface PastGameType {
-  opponentName: string;
-  opponentPic: string;
+  opponentName: string | null;
+  opponentPic: string | null;
   date: Date;
   result: string;
   index: number;
@@ -22,7 +22,11 @@ const PastGameItem = (props: PastGameType) => {
     >
       <Td>{props.index + 1}</Td>
       <Td className="flex items-center gap-1">
-        <Avatar src={props.opponentPic} name={props.opponentName} size="xs" />
+        <Avatar
+          src={props.opponentPic as string}
+          name={props.opponentName as string}
+          size="xs"
+        />
         {props.opponentName}
       </Td>
       <Td>{props.date.toLocaleString()}</Td>

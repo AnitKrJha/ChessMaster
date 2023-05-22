@@ -1,6 +1,7 @@
 "use client";
 
 import { Providers } from "@/lib/Chakra/Providers";
+import { useSupabase } from "@/lib/Supabase/Providers";
 import { Box, Button, Divider } from "@chakra-ui/react";
 import {
   ArrowRight,
@@ -10,7 +11,9 @@ import {
   Swords,
 } from "lucide-react";
 import { Bebas_Neue, Montserrat } from "next/font/google";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import { useRef, useState } from "react";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 const monst = Montserrat({
@@ -20,11 +23,40 @@ const monst = Montserrat({
 type Props = {};
 
 const CreateRoom = (props: Props) => {
-  const [geneRatedLink, setGeneratedLink] = useState<string | undefined>(
-    undefined
-  );
+  const { supabase, session } = useSupabase();
+  const geneRatedLink = useRef<string | undefined>(undefined);
+  const [loading, setLoading] = useState(false);
 
-  const [copiedLink, setCopiedLink] = useState<string | undefined>(undefined);
+  const handleCreateRoom = async () => {
+    try {
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from("games")
+        .insert([
+          {
+            player1: session?.user.id,
+            player1name: session?.user.user_metadata.name,
+            player1pic: session?.user.user_metadata.avatar_url,
+            status: "incomplete",
+          },
+        ])
+        .select();
+
+      geneRatedLink.current = `${process.env.NEXT_PUBLIC_BASE_URL}/play/${
+        data!.at(0)!.id
+      }`;
+
+      console.log(data);
+    } catch (e: any) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const router = useRouter();
+
+  //======================================================================================
 
   return (
     <div className="w-full flex-grow-1  px-4 py-2 flex flex-col bg-black bg-opacity-10 backdrop-blur-md rounded shadow-sm shadow-gray-500">
@@ -65,6 +97,8 @@ const CreateRoom = (props: Props) => {
               fontWeight={"normal"}
               fontSize={"medium"}
               className="flex items-center gap-2 basis-1/3 font-normal text-xl"
+              onClick={handleCreateRoom}
+              isLoading={loading}
             >
               Create Link
               <ArrowRight size={17} />
@@ -80,7 +114,9 @@ const CreateRoom = (props: Props) => {
               w="full"
               className={`flex ${monst.className} basis-2/3 items-center justify-center gap-2 font-medium text-base  py-2 rounded`}
             >
-              {geneRatedLink ? geneRatedLink : "create room link"}
+              {geneRatedLink.current
+                ? geneRatedLink.current
+                : "create room link"}
             </Box>
           </div>
 
@@ -93,6 +129,9 @@ const CreateRoom = (props: Props) => {
             fontWeight={"normal"}
             fontSize={"xl"}
             className="flex items-center gap-2 text-black font-normal text-xl"
+            onClick={(e) => {
+              if (geneRatedLink) router.push(geneRatedLink.current as string);
+            }}
           >
             Play Now
             <Swords />

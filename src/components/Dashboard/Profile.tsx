@@ -21,27 +21,21 @@ const monst = Montserrat({
   subsets: ["latin"],
   weight: ["500", "600"],
 });
-type Props = {};
+type Props = {
+  gamesPlayed: number;
+  loading: boolean;
+};
 
 const Profile = (props: Props) => {
   const { session } = useSupabase();
   const [loading, setLoading] = useState(true);
   const [player, setPlayer] = useState<any>({
-    gamesPlayed: 0,
-    gamesWon: 0,
-    gamesLost: 0,
+    gamesPlayed: props.gamesPlayed,
+    gamesWon: props.gamesPlayed,
+    gamesLost: props.gamesPlayed,
   });
 
-  async function getUserDetails() {
-    await waitForFiveSeconds();
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    getUserDetails();
-  }, []);
-
-  if (loading) {
+  if (props.loading) {
     return <Cardloading />;
   }
 
