@@ -1,7 +1,11 @@
 import RecoilProviders from "@/lib/Recoil/RecoilProviders";
 import "./globals.css";
+import { headers, cookies } from "next/headers";
+
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/Header";
+import SupabaseProvider from "@/lib/Supabase/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,19 +18,32 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = createServerComponentSupabaseClient({
+    cookies: cookies,
+    headers: headers,
+  });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  console.log({ sess: session?.expires_at });
+
   return (
     <html lang="en">
-      <RecoilProviders>
-        <body className={inter.className}>
-          <Header />
-          {children}
-        </body>
-      </RecoilProviders>
+      <body className={inter.className}>
+        <SupabaseProvider session={session}>
+          <RecoilProviders>
+            <Header />
+            {children}
+          </RecoilProviders>
+        </SupabaseProvider>
+      </body>
     </html>
   );
 }

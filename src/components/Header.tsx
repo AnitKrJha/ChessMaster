@@ -4,6 +4,7 @@ import { Providers } from "@/lib/Chakra/Providers";
 // import * as ChessMasterLogo from "./../../public/ChessMasterLogo3.svg";
 import ChakraButton from "../lib/Chakra/button";
 import Image from "next/image";
+import { HeaderButton } from "./HeaderButton";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 
@@ -28,18 +29,7 @@ export function Header() {
           </Link>
         </div>
 
-        <Link
-          href={"/choose"}
-          className={`tracking-wider text-white ${bebas.className}`}
-        >
-          <ChakraButton
-            variant={"outline"}
-            className=" font-normal"
-            _hover={{ bg: "rgba(255,255,255,0.13)" }}
-          >
-            Play Chess
-          </ChakraButton>
-        </Link>
+        <HeaderButton />
       </div>
     </header>
   );

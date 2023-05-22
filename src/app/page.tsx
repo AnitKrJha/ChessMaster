@@ -4,6 +4,8 @@ import { Bebas_Neue, Montserrat } from "next/font/google";
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 const monst = Montserrat({ subsets: ["latin"], weight: ["300", "400"] });
 
+console.log("page app");
+
 export default function Home() {
   return (
     <>
