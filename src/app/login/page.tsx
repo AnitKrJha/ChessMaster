@@ -36,7 +36,7 @@ const LoginPage = (props: Props) => {
         // view={}
         socialLayout="horizontal"
         providers={["google"]}
-        redirectTo="/dashboard"
+        redirectTo={process.env.NEXT_PUBLIC_REDIRECT_URL}
       />
     </div>
   );
