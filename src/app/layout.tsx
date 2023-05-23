@@ -6,6 +6,7 @@ import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-next
 import { Inter } from "next/font/google";
 import { Header } from "@/components/Header";
 import SupabaseProvider from "@/lib/Supabase/Providers";
+import ToastProvider from "@/lib/ReactHotToast/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,8 +40,10 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SupabaseProvider session={session}>
           <RecoilProviders>
-            <Header />
-            {children}
+            <ToastProvider>
+              <Header />
+              {children}
+            </ToastProvider>
           </RecoilProviders>
         </SupabaseProvider>
       </body>

@@ -6,6 +6,7 @@ import CreateRoom from "@/components/Dashboard/CreateRoom";
 import PastGames from "@/components/Dashboard/pastgames";
 import { PastGameType } from "@/components/Dashboard/PastGameItem";
 import { useSupabase } from "@/lib/Supabase/Providers";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -33,7 +34,7 @@ const DashboardPage = (props: Props) => {
         result: result,
       };
     });
-    setGamesPlayed(pastgames.length);
+
     return pastgames;
   };
 
@@ -48,8 +49,12 @@ const DashboardPage = (props: Props) => {
 
       if (error) throw new Error(error.message);
 
-      setPastGames(formatGames(data));
+      let formattedGames = formatGames(data);
+
+      setPastGames(formattedGames);
+      setGamesPlayed(formatGames.length);
     } catch (e: any) {
+      toast.error(e.message);
       console.log("error in getting games");
     } finally {
       console.log(pastGames);

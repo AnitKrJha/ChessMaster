@@ -14,6 +14,7 @@ import { Bebas_Neue, Montserrat } from "next/font/google";
 import { useRouter } from "next/navigation";
 
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 const monst = Montserrat({
@@ -47,8 +48,10 @@ const CreateRoom = (props: Props) => {
         data!.at(0)!.id
       }`;
 
+      if (error) throw new Error(error.message);
       console.log(data);
     } catch (e: any) {
+      toast.error(e.message);
     } finally {
       setLoading(false);
     }
