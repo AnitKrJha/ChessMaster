@@ -31,9 +31,10 @@ export function HeaderButton({}) {
     <div className="flex gap-2">
       <Link
         href={session ? "/dashboard" : "/login"}
-        className={`tracking-wider text-white ${bebas.className}`}
+        className={` text-white tracking-wide ${bebas.className}`}
       >
         <ChakraButton
+          size={{ base: "sm", sm: "md" }}
           variant={"outline"}
           className=" font-normal"
           _hover={{
@@ -46,8 +47,9 @@ export function HeaderButton({}) {
 
       {session && (
         <ChakraButton
+          size={{ base: "sm", sm: "md" }}
           variant={"solid"}
-          className={` font-normal text-black ${bebas.className}`}
+          className={` font-normal text-black tracking-wide ${bebas.className}`}
           _hover={{
             bg: "rgba(255,255,255,0.83)",
           }}

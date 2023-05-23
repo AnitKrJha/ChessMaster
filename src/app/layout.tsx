@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import { Header } from "@/components/Header";
 import SupabaseProvider from "@/lib/Supabase/Providers";
 import ToastProvider from "@/lib/ReactHotToast/Provider";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +44,7 @@ export default async function RootLayout({
             <ToastProvider>
               <Header />
               {children}
+              <Footer />
             </ToastProvider>
           </RecoilProviders>
         </SupabaseProvider>

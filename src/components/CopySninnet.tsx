@@ -26,6 +26,7 @@ const CopyText = ({ text }: Props) => {
       <input
         type="text"
         value={text}
+        placeholder={!text ? "create link >" : ""}
         className={`italic ${monst.className} text-white flex-1 pr-11 text-sm bg-white bg-opacity-25  rounded py-2 px-3 focus:outline-none`}
         readOnly
       />

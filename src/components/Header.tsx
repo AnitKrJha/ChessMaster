@@ -19,7 +19,7 @@ export function Header() {
             <Image
               src={"/ChessMasterLogo3.svg"}
               alt="website logo"
-              className="h-8 sm:h-10 mb-2 w-fit"
+              className="h-7 sm:h-10 mb-2 w-fit"
               width={30}
               height={30}
               quality={10}
