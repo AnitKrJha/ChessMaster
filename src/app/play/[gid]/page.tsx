@@ -18,7 +18,7 @@ const PlayGame = ({ params: { gid } }: Props) => {
   const [LinkStatus, setLinkStatus] = useState<
     "invalid" | "complete" | "valid"
   >("invalid");
-  const [chekingLink, setChekingLink] = useState(false);
+  const [chekingLink, setChekingLink] = useState(true);
 
   useEffect(() => {
     const checkLink = async () => {
