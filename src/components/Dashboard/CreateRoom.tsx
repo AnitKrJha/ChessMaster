@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import CopyText from "../CopySninnet";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 const monst = Montserrat({
@@ -107,20 +108,13 @@ const CreateRoom = (props: Props) => {
               <ArrowRight size={17} />
             </Button>
 
-            <Box
-              as={"div"}
-              _hover={{
-                bg: "rgba(255,255,255,0.13)",
-                cursor: "pointer",
-              }}
-              textColor={geneRatedLink ? "gray.200" : "gray.600"}
-              w="full"
-              className={`flex ${monst.className} basis-2/3 items-center justify-center gap-2 font-medium text-base  py-2 rounded`}
-            >
-              {geneRatedLink.current
-                ? geneRatedLink.current
-                : "create room link"}
-            </Box>
+            <CopyText
+              text={
+                geneRatedLink.current
+                  ? geneRatedLink.current
+                  : "create room link"
+              }
+            />
           </div>
 
           <Button
