@@ -109,11 +109,7 @@ const CreateRoom = (props: Props) => {
             </Button>
 
             <CopyText
-              text={
-                geneRatedLink.current
-                  ? geneRatedLink.current
-                  : "create room link"
-              }
+              text={geneRatedLink.current ? geneRatedLink.current : ""}
             />
           </div>
 
