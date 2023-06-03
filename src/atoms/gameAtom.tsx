@@ -7,6 +7,7 @@ export interface GameStateType {
   gameMode: "multiplayer" | "passnplay";
   startingColor: "w" | "b";
   boardOrientation: "white" | "black";
+  isSpectator?: boolean;
   movesPlayed: number;
   moveNumberView: number;
 }

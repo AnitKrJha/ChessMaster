@@ -49,6 +49,7 @@ const PlayGame = ({ params: { gid } }: Props) => {
 
           if (gamestatus === "ended") {
             setLinkStatus("ended");
+            return;
           } else if (opponent === null && session?.user.id !== creator) {
             //popuplate player 2 field and change the status to ongoing
 
@@ -63,29 +64,50 @@ const PlayGame = ({ params: { gid } }: Props) => {
               })
               .eq("id", gid);
 
+            setGameState((prev) => ({
+              ...prev,
+              fen: game.fen(),
+              moveNumberView: game.moveNumber() + 2,
+              movesPlayed: game.moveNumber() + 2,
+
+              boardOrientation: creatorColor === "white" ? "black" : "white",
+            }));
             setLinkStatus("valid");
           }
           if (session?.user.id === creator || session?.user.id === opponent) {
-            game.loadPgn(pgn ?? undefined);
+            //load the game from the database and
+            game.loadPgn(pgn ?? "");
             if (session?.user.id === creator) {
               setGameState((prev) => ({
                 ...prev,
                 fen: game.fen(),
+                moveNumberView: game.moveNumber() + 2,
+                movesPlayed: game.moveNumber() + 2,
                 boardOrientation: creatorColor,
               }));
             } else {
               setGameState((prev) => ({
                 ...prev,
                 fen: game.fen(),
+                moveNumberView: game.moveNumber() + 2,
+                movesPlayed: game.moveNumber() + 2,
 
                 boardOrientation: creatorColor === "white" ? "black" : "white",
               }));
             }
-            //load the game from the database and
-
+            console.log("jhell");
             setLinkStatus("valid");
           } else if (gamestatus === "ongoing") {
             // join as spectator
+            game.loadPgn(pgn ?? "");
+            toast.success("Hello Spectator");
+            setGameState((prev) => ({
+              ...prev,
+              fen: game.fen(),
+              moveNumberView: game.moveNumber() + 2,
+              movesPlayed: game.moveNumber() + 2,
+              isSpectator: true,
+            }));
             setLinkStatus("valid");
           }
         } catch (e: any) {
@@ -113,10 +135,12 @@ const PlayGame = ({ params: { gid } }: Props) => {
         game,
         false,
         null,
+        gameState,
         setGameState,
         setModalState,
         gid,
-        supabase
+        supabase,
+        session
       );
     });
   }, []);
@@ -136,11 +160,14 @@ const PlayGame = ({ params: { gid } }: Props) => {
   }
 
   return (
-    <main className="min-h-[calc(100dvh_-_64px)] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black pt-8 ">
-      {/*chessBoard*/}
-
+    <>
+      {game.turn() === gameState.boardOrientation.at(0) ? (
+        <div className="h-7 py-1 px-1">Your Turn</div>
+      ) : (
+        <div className="h-7 py-1 px-1">Opponent Turn</div>
+      )}
       <EnhancedChessboard channel={channel.current} gid={gid} />
-    </main>
+    </>
   );
 };
 

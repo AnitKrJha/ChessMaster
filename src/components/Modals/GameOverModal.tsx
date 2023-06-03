@@ -18,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import Image from "next/image";
+import { GameState } from "@/atoms/gameAtom";
+import { useRouter } from "next/navigation";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 const monst = Montserrat({ subsets: ["latin"], weight: ["400"] });
@@ -29,10 +31,12 @@ type Props = {
 
 const GameOverModal = (props: Props) => {
   const [modalState, setModalState] = useRecoilState(ModalState);
-
+  const [gameState, setGameState] = useRecoilState(GameState);
+  const router = useRouter();
   const handleModalClose = () => {
     setModalState((prev) => ({ ...prev, open: false }));
     props.resetBoard();
+    router.push("/dashboard");
   };
 
   return (
@@ -52,7 +56,9 @@ const GameOverModal = (props: Props) => {
             className={`${bebas.className} `}
           >
             <ModalHeader className="text-white text-4xl font-normal">
-              🎉 Victory!
+              {gameState.boardOrientation.at(0) === props.loser
+                ? "😭 Loss!"
+                : "🎉 Victory"}
             </ModalHeader>
 
             <ModalBody className={`${monst.className} text-gray-200 `}>
@@ -67,19 +73,21 @@ const GameOverModal = (props: Props) => {
                   quality={10}
                 />
               </div>
-              Congratulations, Chessmaster! You have emerged victorious. Well
-              played! 🏆
+              {gameState.boardOrientation.at(0) === props.loser
+                ? "Better Luck Next Time! 👏 Keep it up! 💪"
+                : "Congratulations, Chessmaster! You have emerged victorious. Well played! 🏆"}
             </ModalBody>
 
             <ModalFooter>
               <Button
                 size={"sm"}
                 variant="outline"
+                color={"gray.100"}
                 className="text-slate-200 font-normal text-md"
                 onClick={handleModalClose}
                 _hover={{ bg: "rgba(0,0,0,0.2)" }}
               >
-                Play Again 🔄
+                Go to Dashboard
               </Button>
             </ModalFooter>
           </ModalContent>

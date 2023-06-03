@@ -7,11 +7,14 @@ import { IllegalSound, PlayChessBoardSound } from "../Sounds/ChessBoardSound";
 import { whichMove } from "./whichMove";
 import {
   RealtimeChannel,
+  Session,
   SupabaseClient,
   createClient,
 } from "@supabase/supabase-js";
 import { useSupabase } from "../Supabase/Providers";
 import { game } from "../ChessLogic/Game";
+import { supabase } from "@supabase/auth-ui-shared";
+import { UUID } from "crypto";
 
 const onPieceDrop = (
   source: Square,
@@ -20,10 +23,12 @@ const onPieceDrop = (
   game: Chess,
   sendMoveToServer: boolean,
   channel: RealtimeChannel | null,
+  gameState: GameStateType,
   setGame: SetterOrUpdater<GameStateType>,
   setModalState: SetterOrUpdater<ModalStateType>,
   gid: string,
-  supabase: SupabaseClient
+  supabase: SupabaseClient,
+  session: any
 ): boolean => {
   try {
     // const MOVES = game.moves({ verbose: true });
@@ -38,6 +43,13 @@ const onPieceDrop = (
     //check is gameOver
     if (game.isGameOver()) {
       PlayChessBoardSound("gameover");
+      if (gameState.boardOrientation.at(0) !== game.turn()) {
+        if (game.isDraw()) {
+          gameOver(supabase, gid, null);
+        } else if (game.isCheckmate()) {
+          gameOver(supabase, gid, session?.user.id);
+        }
+      }
       setModalState({ open: true, type: "Gameover" });
     }
 
@@ -85,5 +97,14 @@ const onPieceDrop = (
 const sendPGN = async (supabase: SupabaseClient, gid: string) => {
   await supabase.from("games").update({ pgn: game.pgn() }).eq("id", gid);
 };
-
+const gameOver = async (
+  supabase: SupabaseClient,
+  gid: string,
+  winner: string | null
+) => {
+  await supabase
+    .from("games")
+    .update({ status: "ended", winner: winner })
+    .eq("id", gid);
+};
 export default onPieceDrop;

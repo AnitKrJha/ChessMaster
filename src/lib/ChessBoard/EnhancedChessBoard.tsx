@@ -29,7 +29,7 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
   const ref: Ref<ClearPremoves> = createRef<ClearPremoves>();
 
   const screenWidth = useScreenWidth();
-  const { supabase } = useSupabase();
+  const { supabase, session } = useSupabase();
   const setModalState = useSetRecoilState(ModalState);
   const [gameState, setGameState] = useRecoilState(GameState);
   const resetGame = () => {
@@ -45,10 +45,12 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
       game,
       true,
       channel,
+      gameState,
       setGameState,
       setModalState,
       gid,
-      supabase
+      supabase,
+      session
     );
   };
 
@@ -59,7 +61,10 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
         position={gameState.fen ?? "start"}
         // areArrowsAllowed={false}
         boardOrientation={gameState.boardOrientation}
-        arePiecesDraggable={game.turn() === gameState.boardOrientation.at(0)}
+        arePiecesDraggable={
+          game.turn() === gameState.boardOrientation.at(0) &&
+          !gameState.isSpectator
+        }
         customDropSquareStyle={{
           background:
             "linear-gradient(to left,rgba(70, 141, 139,0.8), rgba(15, 85, 99,0.5))",
