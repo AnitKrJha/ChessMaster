@@ -6,7 +6,7 @@ export interface GameStateType {
   turn?: "w" | "b";
   gameMode: "multiplayer" | "passnplay";
   startingColor: "w" | "b";
-  boardOrientation: "w" | "b";
+  boardOrientation: "white" | "black";
   movesPlayed: number;
   moveNumberView: number;
 }
@@ -14,10 +14,10 @@ export interface GameStateType {
 export const defaultGameState: GameStateType = {
   fen: null,
   winner: undefined,
-  turn: undefined,
+  turn: "w",
   gameMode: "multiplayer",
   startingColor: "w",
-  boardOrientation: "w",
+  boardOrientation: "white",
   movesPlayed: 0,
   moveNumberView: 0,
 };

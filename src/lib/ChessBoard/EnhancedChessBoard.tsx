@@ -12,19 +12,24 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { game } from "../ChessLogic/Game";
 import useScreenWidth from "../utils/useScreenWidth";
 import onPieceDrop from "./onPieceDrop";
+import { RealtimeChannel } from "@supabase/supabase-js";
+import { supabase } from "@supabase/auth-ui-shared";
+import { useSupabase } from "../Supabase/Providers";
 
 interface ChessboardWrapperProps extends ChessboardProps {
-  additionalProp?: string;
+  channel: RealtimeChannel | null;
+  gid: string;
 }
 
 const ChessBoard: React.FC<ChessboardWrapperProps> = ({
-  additionalProp,
+  channel,
+  gid,
   ...otherProps
 }) => {
   const ref: Ref<ClearPremoves> = createRef<ClearPremoves>();
 
   const screenWidth = useScreenWidth();
-
+  const { supabase } = useSupabase();
   const setModalState = useSetRecoilState(ModalState);
   const [gameState, setGameState] = useRecoilState(GameState);
   const resetGame = () => {
@@ -38,8 +43,12 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
       targetSquare,
       piece,
       game,
+      true,
+      channel,
       setGameState,
-      setModalState
+      setModalState,
+      gid,
+      supabase
     );
   };
 
@@ -49,6 +58,8 @@ const ChessBoard: React.FC<ChessboardWrapperProps> = ({
         onPieceDrop={onDrop}
         position={gameState.fen ?? "start"}
         // areArrowsAllowed={false}
+        boardOrientation={gameState.boardOrientation}
+        arePiecesDraggable={game.turn() === gameState.boardOrientation.at(0)}
         customDropSquareStyle={{
           background:
             "linear-gradient(to left,rgba(70, 141, 139,0.8), rgba(15, 85, 99,0.5))",

@@ -5,14 +5,25 @@ import { Piece, Square } from "react-chessboard/dist/chessboard/types";
 import { SetterOrUpdater } from "recoil";
 import { IllegalSound, PlayChessBoardSound } from "../Sounds/ChessBoardSound";
 import { whichMove } from "./whichMove";
+import {
+  RealtimeChannel,
+  SupabaseClient,
+  createClient,
+} from "@supabase/supabase-js";
+import { useSupabase } from "../Supabase/Providers";
+import { game } from "../ChessLogic/Game";
 
 const onPieceDrop = (
   source: Square,
   target: Square,
   piece: Piece,
   game: Chess,
+  sendMoveToServer: boolean,
+  channel: RealtimeChannel | null,
   setGame: SetterOrUpdater<GameStateType>,
-  setModalState: SetterOrUpdater<ModalStateType>
+  setModalState: SetterOrUpdater<ModalStateType>,
+  gid: string,
+  supabase: SupabaseClient
 ): boolean => {
   try {
     // const MOVES = game.moves({ verbose: true });
@@ -49,14 +60,30 @@ const onPieceDrop = (
     setGame((prev) => ({
       ...prev,
       fen: game.fen(),
+      turn: prev.turn === "w" ? "b" : "w",
       movesPlayed: prev.movesPlayed + 1,
       moveNumberView: prev.movesPlayed + 1,
     }));
+
+    if (channel && sendMoveToServer) {
+      channel.send({
+        type: "broadcast",
+        event: "pieceMove",
+        source: source,
+        target: target,
+        piece: piece,
+      });
+      sendPGN(supabase, gid);
+    }
   } catch (e: any) {
     IllegalSound.play();
     console.log(e.message);
   }
   return true;
+};
+
+const sendPGN = async (supabase: SupabaseClient, gid: string) => {
+  await supabase.from("games").update({ pgn: game.pgn() }).eq("id", gid);
 };
 
 export default onPieceDrop;

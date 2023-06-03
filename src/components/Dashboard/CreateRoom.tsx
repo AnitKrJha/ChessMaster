@@ -40,7 +40,8 @@ const CreateRoom = (props: Props) => {
             player1: session?.user.id,
             player1name: session?.user.user_metadata.name,
             player1pic: session?.user.user_metadata.avatar_url,
-            status: "incomplete",
+            player1color: "white",
+            status: "waiting",
           },
         ])
         .select();
